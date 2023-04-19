@@ -1,0 +1,25 @@
+{
+  "name": "nodejs-cli-user-authentication",
+  "version": "0.0.0",
+  "description": "Example on how to enable AAD authentication for a Node.js CLI application using the OAuth 2.0 authorization code flow with PKCE (Proof Key for Code Exchange) ",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "npm test"
+  },
+  "keywords": [
+    "azure",
+    "node.js",
+    "AAD",
+    "PKCE"
+  ],
+  "author": "Andrei Rusu",
+  "license": "MIT",
+  "dependencies": {
+    "@azure/msal-node": "^1.17.0",
+    "commander": "^10.0.1",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "open": "^9.1.0"
+  }
+}
