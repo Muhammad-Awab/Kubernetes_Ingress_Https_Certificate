@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 sp_name=""
 app_id=""
@@ -35,11 +35,10 @@ read_settings() {
     # Check if settings.json exists and read the domain name and resource_group
     if [[ -f "$settings_file" ]]; then
         default_domain_name=$(jq -r '.domain_name' "$settings_file")
+        default_resource_group=$(jq -r '.resource_group' "$settings_file")
+        default_sp_name=$(jq -r '.sp_name' "$settings_file")
     fi
 
-    if [[ -f "$settings_file" ]]; then
-        default_resource_group=$(jq -r '.resource_group' "$settings_file")
-    fi
 }
 
 
@@ -212,6 +211,7 @@ prepare_and_apply_cluster_issuer() {
 write_settings_to_file() {
     local domain_name=$1
     local resource_group=$2
+    local sp_name=$3
 
     # Check if the domain name is provided
     if [[ -z "$domain_name" ]]; then
@@ -228,7 +228,8 @@ write_settings_to_file() {
     cat > settings.json << EOF
 {
     "domain_name": "$domain_name",
-    "resource_group": "$resource_group"
+    "resource_group": "$resource_group",
+    "sp_name": "$sp_name"	
 }
 EOF
 }
@@ -255,10 +256,10 @@ main() {
     
     echo -en "${GREEN}Enter the name of the Azure Service Principal [${NC}${default_sp_name}${GREEN}]: ${NC}"
     read sp_name
-    domain_name=${domain_name:-$default_sp_name}
+    sp_name=${sp_name:-$default_sp_name}
     validate_sp_name
     
-    write_settings_to_file $domain_name $resource_group
+    write_settings_to_file $domain_name $resource_group $sp_name
     manage_service_principal
     
     echo -e "\n${INFO} Creating Kubernetes secret..."

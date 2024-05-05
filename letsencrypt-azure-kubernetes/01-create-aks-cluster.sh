@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 subscription_id=""
 resource_group=""
@@ -141,7 +141,7 @@ main() {
     read resource_group
     resource_group=${resource_group:-$DEFAULT_RESOURCE_GROUP}
 
-    echo -en "\n${GREEN}Enter Azure region [${NC}${DEFAULT_RESOURCE_GROUP}${GREEN}]: ${NC}"
+    echo -en "\n${GREEN}Enter Azure region [${NC}${DEFAULT_REGION}${GREEN}]: ${NC}"
     read region
     region=${region:-$DEFAULT_REGION}
 
