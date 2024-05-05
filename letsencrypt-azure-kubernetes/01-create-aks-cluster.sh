@@ -2,6 +2,7 @@
 
 subscription_id=""
 resource_group=""
+region=""
 ssh_key_path=""
 cluster_name=""
 node_count=""
@@ -13,6 +14,7 @@ DEFAULT_RESOURCE_GROUP="we1-akstutorial-rg"
 DEFAULT_SSH_KEY_PATH="$HOME/.ssh/id_rsa.pub"
 DEFAULT_CLUSTER_NAME="we1-akstutorial-cluster"
 DEFAULT_NODE_COUNT=1
+DEFAULT_REGION="West Europe"
 DEFAULT_NODE_VM_SIZE="Standard_D2s_v3"
 
 # Color Definitions
@@ -59,8 +61,8 @@ check_resource_group_exists() {
 }
 
 create_resource_group() {
-    echo -e "${INFO} Creating resource group '$resource_group' in 'West Europe'..."
-    az group create --name $resource_group --location "West Europe" --output none
+    echo -e "${INFO} Creating resource group '$resource_group' in '$region'..."
+    az group create --name $resource_group --location "$region" --output none
     echo -e "${CHECK_MARK} Resource group created."
 }
 
@@ -138,6 +140,10 @@ main() {
     echo -en "\n${GREEN}Enter Azure resource group name [${NC}${DEFAULT_RESOURCE_GROUP}${GREEN}]: ${NC}"
     read resource_group
     resource_group=${resource_group:-$DEFAULT_RESOURCE_GROUP}
+
+    echo -en "\n${GREEN}Enter Azure region [${NC}${DEFAULT_RESOURCE_GROUP}${GREEN}]: ${NC}"
+    read region
+    region=${region:-$DEFAULT_REGION}
 
     check_resource_group_exists   
     ssh_key_path=${ssh_key_path:-$DEFAULT_SSH_KEY_PATH}
